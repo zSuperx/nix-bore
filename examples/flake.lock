@@ -5,10 +5,10 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "dirtyRev": "acebf5fc1da274684623464583af5bb00b951cfa-dirty",
-        "dirtyShortRev": "acebf5f-dirty",
-        "lastModified": 1765945961,
-        "narHash": "sha256-NbNCPB09RwMT5uE0cX3D96BHquoxhVpeeMreHk8MoOo=",
+        "dirtyRev": "9c94d0aab7ef53a51ede6d565c3d97e4ea11d2f3-dirty",
+        "dirtyShortRev": "9c94d0a-dirty",
+        "lastModified": 1765952209,
+        "narHash": "sha256-TOS69QjyYQdh8+jmuL32g4W+BLv8St7+uhkAnfhJk/8=",
         "type": "git",
         "url": "file:///home/zsuper/fun/nix-bore"
       },

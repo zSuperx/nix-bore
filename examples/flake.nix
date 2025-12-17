@@ -31,7 +31,6 @@
                 other-thing = {
                   enable = false;
                   to = "bore.pub";
-                  local-port = 6969;
                 };
               };
             };
@@ -42,7 +41,7 @@
             services.bore.servers = {
               minecraft-proxy = {
                 enable = true;
-                secret = "bobby";
+                secretFile = "/run/keys/bore.secret";
               };
 
               minecraft-proxy2 = {

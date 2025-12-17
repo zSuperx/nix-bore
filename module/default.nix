@@ -5,8 +5,9 @@
   ...
 }:
 let
-  inherit (lib) mkOption types;
   cfg = config.services.bore;
+  inherit (lib) mkOption types;
+  inherit (types) package bool;
 in
 {
   imports = [
@@ -17,7 +18,7 @@ in
   options = {
     services.bore = {
       package = mkOption {
-        type = types.package;
+        type = package;
         default = pkgs.bore-cli;
         description = ''
           The bore package to use.
@@ -25,7 +26,7 @@ in
       };
 
       skipLocalPortCheck = mkOption {
-        type = types.bool;
+        type = bool;
         default = false;
         description = ''
           Skip address/port duplication check for local proxies.
@@ -33,7 +34,7 @@ in
       };
 
       skipServerPortCheck = mkOption {
-        type = types.bool;
+        type = bool;
         default = false;
         description = ''
           Skip address/port duplication check for remote proxy servers.

@@ -5,13 +5,14 @@
 }:
 let
   inherit (lib) mkOption mkEnableOption types;
+  inherit (types) int nullOr str;
 in
 {
   options = {
     enable = mkEnableOption "Bore TCP tunnel (local proxy to the remote server) for `<name>`";
     
     local-host = mkOption {
-      type = types.str;
+      type = str;
       default = "localhost";
       description = ''
         The local host to expose [default: localhost]
@@ -19,7 +20,7 @@ in
     };
 
     to = mkOption {
-      type = types.str;
+      type = str;
       default = "bore.pub";
       description = ''
         Address of the remote server to expose local ports to.
@@ -27,7 +28,7 @@ in
     };
 
     secret = mkOption {
-      type = types.nullOr types.str;
+      type = nullOr str;
       default = null;
       description = ''
         Optional secret for authentication.
@@ -35,7 +36,7 @@ in
     };
 
     remote-port = mkOption {
-      type = types.int;
+      type = int;
       default = 0;
       description = ''
         Optional port on the remote server to select. (If set to 0, a random
@@ -44,7 +45,7 @@ in
     };
 
     local-port = mkOption {
-      type = types.int;
+      type = int;
       description = ''
         The local port to expose.
       '';

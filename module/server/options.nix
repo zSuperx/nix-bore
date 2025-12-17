@@ -5,13 +5,14 @@
 }:
 let
   inherit (lib) mkOption mkEnableOption types;
+  inherit (types) port nullOr str path;
 in
 {
   options = {
     enable = mkEnableOption "Bore TCP tunnel (remote proxy server) for `<name>`";
 
     min-port = mkOption {
-      type = types.int;
+      type = port;
       default = 1024;
       description = ''
         Minimum accepted TCP port number.
@@ -19,7 +20,7 @@ in
     };
 
     max-port = mkOption {
-      type = types.int;
+      type = port;
       default = 65535;
       description = ''
         Maximum accepted TCP port number.
@@ -27,15 +28,24 @@ in
     };
 
     secret = mkOption {
-      type = types.nullOr types.str;
+      type = nullOr str;
       default = null;
       description = ''
         Optional secret for authentication.
       '';
     };
 
+    secretFile = mkOption {
+      type = nullOr path;
+      default = null;
+      description = ''
+        Optional path to file containing secret for authentication. Takes
+        precedence over `secret` if both are set.
+      '';
+    };
+
     bind-addr = mkOption {
-      type = types.str;
+      type = str;
       default = "0.0.0.0";
       description = ''
         IP address to bind to, clients must reach this.
@@ -43,7 +53,7 @@ in
     };
 
     bind-tunnels = mkOption {
-      type = types.str;
+      type = str;
       default = config.bind-addr;
       description = ''
         IP address where tunnels will listen on, defaults to value of

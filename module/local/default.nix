@@ -5,17 +5,16 @@
   ...
 }:
 let
-  inherit (lib) mkOption types optionalString;
   cfg = config.services.bore;
+  inherit (lib) mkOption types optionalString;
+  inherit (types) attrsOf submodule;
 in
 {
   options = {
     services.bore.local = mkOption {
-      type = types.attrsOf (
-        types.submodule {
-          imports = [ ./options.nix ];
-        }
-      );
+      type = attrsOf (submodule {
+        imports = [ ./options.nix ];
+      });
       default = { };
     };
   };
