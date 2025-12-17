@@ -44,6 +44,7 @@ in
 
   config =
     let
+      getEnabled = lib.filterAttrs (_: value: value.enable);
       extractLocalAddrs =
         servers:
         (lib.mapAttrsToList (
@@ -54,7 +55,7 @@ in
     {
       assertions = [
         (lib.mkIf (!cfg.skipLocalPortCheck) {
-          assertion = lib.allUnique (extractLocalAddrs cfg.local);
+          assertion = lib.allUnique (extractLocalAddrs (getEnabled cfg.local));
           message = ''
             nix-bore: Detected duplicate values for bore local
             `local-addr:local-port` tuples in `services.bore.local`. Ensure
@@ -65,7 +66,7 @@ in
         })
 
         (lib.mkIf (!cfg.skipServerPortCheck) {
-          assertion = lib.allUnique (extractRemoteAddrs cfg.servers);
+          assertion = lib.allUnique (extractRemoteAddrs (getEnabled cfg.servers));
           message = ''
             nix-bore: Detected duplicate values for bore remote `bind-addr`s
             in `services.bore.servers`. Ensure `bind-addr` is unique across servers! 
