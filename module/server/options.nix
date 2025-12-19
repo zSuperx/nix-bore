@@ -5,7 +5,12 @@
 }:
 let
   inherit (lib) mkOption mkEnableOption types;
-  inherit (types) port nullOr str path;
+  inherit (types)
+    port
+    nullOr
+    str
+    path
+    ;
 in
 {
   options = {
@@ -27,20 +32,11 @@ in
       '';
     };
 
-    secret = mkOption {
-      type = nullOr str;
-      default = null;
-      description = ''
-        Optional secret for authentication.
-      '';
-    };
-
     secretFile = mkOption {
       type = nullOr path;
       default = null;
       description = ''
-        Optional path to file containing secret for authentication. Takes
-        precedence over `secret` if both are set.
+        Optional path to file containing secret for authentication. 
       '';
     };
 

@@ -3,8 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nix-bore.url = "github:zSuperx/nix-bore"; # Add to inputs
-    nix-bore.url = "/home/zsuper/fun/nix-bore"; # Add to inputs
+    nix-bore.url = "github:zSuperx/nix-bore"; # Add to inputs
   };
 
   outputs =
@@ -25,11 +24,13 @@
                   to = "mc.piyush.ai";
                   remote-port = 6969;
                   local-port = 6969;
-                  secret = "bobby";
+                  secretFile = "/run/keys/bore.secret";
                 };
 
                 other-thing = {
                   enable = false;
+                  remote-port = 6969;
+                  local-port = 6969;
                   to = "bore.pub";
                 };
               };
@@ -46,7 +47,6 @@
 
               minecraft-proxy2 = {
                 enable = false;
-                secret = "bobby";
                 bind-addr = "0.0.0.0";
               };
             };

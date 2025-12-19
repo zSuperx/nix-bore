@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -27,13 +26,14 @@ in
       systemd.services = lib.mapAttrs' (
         name: value:
         let
-          secret =
-            if value.secretFile != null then
-              "--secret ${value.secret}"
-            else if value.secret != null then
-              "--secret $(cat ${value.secretFile})"
-            else
-              "";
+          args = builtins.concatStringsSep " " [
+            "server"
+            "--min-port ${builtins.toString value.min-port}"
+            "--max-port ${builtins.toString value.max-port}"
+            "${optionalString (value.secret != null) "--secret $(cat ${value.secretFile})"}"
+            "--bind-addr ${value.bind-addr}"
+            "--bind-tunnels ${value.bind-tunnels}"
+          ];
         in
         {
           name = "bore-server-${name}";
@@ -54,12 +54,7 @@ in
 
             serviceConfig = {
               ExecStart = ''
-                ${lib.getExe' cfg.package "bore"} server \
-                --min-port ${builtins.toString value.min-port} \
-                --max-port ${builtins.toString value.max-port} \
-                ${secret} \
-                --bind-addr ${value.bind-addr} \
-                --bind-tunnels ${value.bind-tunnels}
+                ${lib.getExe' cfg.package "bore"} ${args}
               '';
               Restart = "on-failure";
               RestartSec = 10;
