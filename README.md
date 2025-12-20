@@ -1,6 +1,6 @@
 # nix-bore
 
-A flake that exposes a NixOS module for the Bore TCP proxy tunnel.
+A flake that exposes a NixOS module for the Bore TCP proxy tunnel. More can be read about `bore` [here](https://github.com/ekzhang/bore).
 
 ## Example Usage
 
