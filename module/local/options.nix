@@ -19,7 +19,7 @@ in
       type = str;
       default = "localhost";
       description = ''
-        The local host to expose [default: localhost]
+        The local host to expose.
       '';
     };
 
@@ -35,7 +35,7 @@ in
       type = nullOr path;
       default = null;
       description = ''
-        Optional path to file containing secret for authentication. 
+        Optional path to file containing secret for authentication.
       '';
     };
 

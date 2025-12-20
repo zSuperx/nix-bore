@@ -6,8 +6,8 @@
 }:
 let
   cfg = config.services.bore;
-  inherit (lib) mkOption types;
-  inherit (types) package bool;
+  inherit (lib) mkOption mkPackageOption types;
+  inherit (types) bool;
 in
 {
   imports = [
@@ -17,13 +17,7 @@ in
 
   options = {
     services.bore = {
-      package = mkOption {
-        type = package;
-        default = pkgs.bore-cli;
-        description = ''
-          The bore package to use.
-        '';
-      };
+      package = mkPackageOption pkgs "bore-cli" { };
 
       skipLocalPortCheck = mkOption {
         type = bool;
@@ -58,10 +52,7 @@ in
         (lib.mkIf (!cfg.skipLocalPortCheck) {
           assertion = lib.allUnique (extractLocalAddrs (getEnabled cfg.local));
           message = ''
-            nix-bore: Detected duplicate values for bore local
-            `local-addr:local-port` tuples in `services.bore.local`. Ensure
-            these tuples are unique across instances! 
-
+            nix-bore: Detected duplicate values for bore local `local-addr:local-port` tuples in `services.bore.local`. Ensure these tuples are unique across instances!
             (To turn off this assertion, set `services.bore.skipLocalPortCheck = true;`)
           '';
         })
@@ -69,12 +60,12 @@ in
         (lib.mkIf (!cfg.skipServerPortCheck) {
           assertion = lib.allUnique (extractRemoteAddrs (getEnabled cfg.servers));
           message = ''
-            nix-bore: Detected duplicate values for bore remote `bind-addr`s
-            in `services.bore.servers`. Ensure `bind-addr` is unique across servers! 
-
+            nix-bore: Detected duplicate values for bore remote `bind-addr`s in `services.bore.servers`. Ensure `bind-addr` is unique across servers!
             (To turn off this assertion, set `services.bore.skipServerPortCheck = true;`)
           '';
         })
       ];
     };
+
+  meta.maintainers = with lib.maintainers; [ zsuper ];
 }

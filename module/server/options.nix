@@ -36,7 +36,7 @@ in
       type = nullOr path;
       default = null;
       description = ''
-        Optional path to file containing secret for authentication. 
+        Optional path to file containing secret for authentication.
       '';
     };
 
@@ -51,6 +51,7 @@ in
     bind-tunnels = mkOption {
       type = str;
       default = config.bind-addr;
+      defaultText = "bind-addr";
       description = ''
         IP address where tunnels will listen on, defaults to value of
         `services.bore.servers.<name>.bind-addr`.

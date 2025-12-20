@@ -7,13 +7,13 @@
   };
 
   outputs =
-    { nixpkgs, nix-bore, ... }: # Add to inputs
+    { nixpkgs, ... }: # Add to inputs
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           # Import module
-          nix-bore.nixosModules.bore
+          # nix-bore.nixosModules.bore
 
           # Bore local examples
           {
@@ -28,7 +28,7 @@
                 };
 
                 other-thing = {
-                  enable = false;
+                  enable = true;
                   remote-port = 6969;
                   local-port = 6969;
                   to = "bore.pub";

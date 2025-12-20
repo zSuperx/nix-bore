@@ -1,58 +1,22 @@
 {
   "nodes": {
-    "nix-bore": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "dirtyRev": "9a91c91e11ad7df32404588b3ae148826b857f78-dirty",
-        "dirtyShortRev": "9a91c91-dirty",
-        "lastModified": 1766003660,
-        "narHash": "sha256-WIvbNCxYPooz7CDYBa1kbyCUyaREP4/zJBr8luv23Xo=",
-        "type": "git",
-        "url": "file:///home/zsuper/fun/nix-bore"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:///home/zsuper/fun/nix-bore"
-      }
-    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1765779637,
-        "narHash": "sha256-KJ2wa/BLSrTqDjbfyNx70ov/HdgNBCBBSQP3BIzKnv4=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1306659b587dc277866c7b69eb97e5f07864d8c4",
-        "type": "github"
+        "dirtyRev": "20c32d078b8ec9d13d2272d0aeaafcdbe34f7b05-dirty",
+        "dirtyShortRev": "20c32d078b8e-dirty",
+        "lastModified": 1766174837,
+        "narHash": "sha256-i0u3ws+/GXeVoJsM4nDEDRYFDBDES/zgqBhG4glPYS8=",
+        "type": "git",
+        "url": "file:///home/zsuper/third-party/nixpkgs"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1765779637,
-        "narHash": "sha256-KJ2wa/BLSrTqDjbfyNx70ov/HdgNBCBBSQP3BIzKnv4=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1306659b587dc277866c7b69eb97e5f07864d8c4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/zsuper/third-party/nixpkgs"
       }
     },
     "root": {
       "inputs": {
-        "nix-bore": "nix-bore",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

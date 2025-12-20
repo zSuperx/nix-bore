@@ -5,7 +5,7 @@
 
   outputs = _: {
     nixosModules = rec {
-      bore = import ./module;
+      bore = import ./module/bore.nix;
       default = bore;
     };
   };

@@ -14,6 +14,7 @@ in
       type = attrsOf (submodule {
         imports = [ ./options.nix ];
       });
+      description = "Definition of bore remote proxy servers.";
       default = { };
     };
   };
@@ -23,45 +24,40 @@ in
       enabledServices = lib.filterAttrs (_: v: v.enable) cfg.servers;
     in
     {
-      systemd.services = lib.mapAttrs' (
-        name: value:
-        let
-          args = builtins.concatStringsSep " " [
-            "server"
-            "--min-port ${builtins.toString value.min-port}"
-            "--max-port ${builtins.toString value.max-port}"
-            "${optionalString (value.secret != null) "--secret $(cat ${value.secretFile})"}"
-            "--bind-addr ${value.bind-addr}"
-            "--bind-tunnels ${value.bind-tunnels}"
+      systemd.services = lib.mapAttrs' (name: value: {
+        name = "bore-server-${name}";
+        value = {
+          description = "bore remote proxy service for ${name}";
+          enable = true;
+          after = [
+            "network-online.target"
+            "nss-lookup.target"
           ];
-        in
-        {
-          name = "bore-server-${name}";
-          value = {
-            description = "bore remote proxy service for ${name}";
-            enable = true;
-            after = [
-              "network-online.target"
-              "nss-lookup.target"
-            ];
 
-            requires = [
-              "network-online.target"
-              "nss-lookup.target"
-            ];
+          requires = [
+            "network-online.target"
+            "nss-lookup.target"
+          ];
 
-            wantedBy = [ "multi-user.target" ];
+          wantedBy = [ "multi-user.target" ];
 
-            serviceConfig = {
-              ExecStart = ''
-                ${lib.getExe' cfg.package "bore"} ${args}
-              '';
-              Restart = "on-failure";
-              RestartSec = 10;
-            };
+          environment = {
+            BORE_MIN_PORT = builtins.toString value.min-port;
+            BORE_MAX_PORT = builtins.toString value.max-port;
           };
 
-        }
-      ) enabledServices;
+          script = ''
+            ${optionalString (value.secretFile != null) ''export BORE_SECRET="$(<${value.secretFile})"''}
+
+            ${lib.getExe' cfg.package "bore"} server --bind-addr="${value.bind-addr}" --bind-tunnels="${value.bind-tunnels}"
+          '';
+
+          serviceConfig = {
+            Restart = "on-failure";
+            RestartSec = 10;
+          };
+        };
+
+      }) enabledServices;
     };
 }
