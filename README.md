@@ -41,7 +41,7 @@ First add the module to your flake's inputs and import it from within the module
         to = "mc.piyush.ai";
         remote-port = 6969;
         local-port = 6969;
-        secret = "bobby";
+        secretFile = "/run/keys/their-password.secret";
       };
 
       other-thing = {
@@ -62,10 +62,10 @@ remotely forwared traffic from `mc.piyush.ai`, on local port `6969`.
 ```nix
 # Bore server examples
 {
-  services.bore.servers = {
+  services.bore.server = {
     remote-proxy = {
       enable = true;
-      secret = "bobby";
+      secret = "/run/keys/my-password.secret";
     };
 
     remote-proxy2 = {
@@ -79,13 +79,14 @@ The above code attempts to start 2 systemd services running `bore server`. It
 will fail because **only one** `bore server` program can bind to `0.0.0.0` at a
 time. A build-time assertion will be thrown in this case.
 
+_(Under 99% of use cases, you will only have 1 bore server per machine)_
 
 ### Troubleshooting
 
 Each enabled `services.bore.local.<name>` will result in a systemd service
 under the name `bore-local-<name>.service`.
 
-Likewise, each enabled `services.bore.servers.<name>` will result in a systemd
+Likewise, each enabled `services.bore.server.<name>` will result in a systemd
 service under the name `bore-server-<name>.service`.
 
 These can all be started and stopped with `systemctl [start|stop]
