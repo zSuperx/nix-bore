@@ -4,14 +4,13 @@
 }:
 let
   inherit (lib) mkOption mkEnableOption types;
-  inherit (types)
-    port
-    nullOr
-    str
-    path
-    ;
+  inherit (types) port str;
 in
 {
+  imports = [
+    ./common-options.nix
+  ];
+
   options = {
     enable = mkEnableOption "Bore TCP tunnel (local proxy to the remote server) for `<name>`";
 
@@ -31,20 +30,12 @@ in
       '';
     };
 
-    secretFile = mkOption {
-      type = nullOr path;
-      default = null;
-      description = ''
-        Optional path to file containing secret for authentication.
-      '';
-    };
-
     remote-port = mkOption {
       type = port;
       default = 0;
       description = ''
-        Optional port on the remote server to select. (If set to 0, a random
-        available port will be assigned by the remote server.)
+        Optional port on the remote server to select.
+        (If set to 0, a random available port will be assigned by the remote server.)
       '';
     };
 

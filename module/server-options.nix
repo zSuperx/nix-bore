@@ -1,18 +1,21 @@
 {
   lib,
   config,
+  options,
   ...
 }:
 let
   inherit (lib) mkOption mkEnableOption types;
   inherit (types)
     port
-    nullOr
     str
-    path
     ;
 in
 {
+  imports = [
+    ./common-options.nix
+  ];
+
   options = {
     enable = mkEnableOption "Bore TCP tunnel (remote proxy server) for `<name>`";
 
@@ -32,14 +35,6 @@ in
       '';
     };
 
-    secretFile = mkOption {
-      type = nullOr path;
-      default = null;
-      description = ''
-        Optional path to file containing secret for authentication.
-      '';
-    };
-
     bind-addr = mkOption {
       type = str;
       default = "0.0.0.0";
@@ -51,10 +46,9 @@ in
     bind-tunnels = mkOption {
       type = str;
       default = config.bind-addr;
-      defaultText = "bind-addr";
+      defaultText = lib.literalExpression "config.${options.bind-addr}";
       description = ''
-        IP address where tunnels will listen on, defaults to value of
-        `services.bore.servers.<name>.bind-addr`.
+        IP address where tunnels will listen on.
       '';
     };
   };

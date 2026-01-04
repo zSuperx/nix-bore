@@ -7,13 +7,13 @@
   };
 
   outputs =
-    { nixpkgs, ... }: # Add to inputs
+    { nixpkgs, nix-bore, ... }: # Add to inputs
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           # Import module
-          # nix-bore.nixosModules.bore
+          nix-bore.nixosModules.bore
 
           # Bore local examples
           {
@@ -23,15 +23,15 @@
                   enable = true;
                   to = "mc.piyush.ai";
                   remote-port = 6969;
-                  local-port = 6969;
+                  local-port = 6970;
                   secretFile = "/run/keys/bore.secret";
                 };
 
                 other-thing = {
                   enable = true;
-                  remote-port = 6969;
-                  local-port = 6969;
-                  to = "bore.pub";
+                  remote-port = 6970;
+                  local-port = 6970;
+                  to = "mc.piyush.ai";
                 };
               };
             };
@@ -39,7 +39,7 @@
 
           # Bore server examples
           {
-            services.bore.servers = {
+            services.bore.server = {
               minecraft-proxy = {
                 enable = true;
                 secretFile = "/run/keys/bore.secret";
