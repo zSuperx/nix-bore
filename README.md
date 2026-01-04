@@ -28,6 +28,8 @@ First add the module to your flake's inputs and import it from within the module
     };
 }
 ```
+then simply set the `services.bore` attribute set from within your `configuration.nix` 
+(or adjacent). Examples are shown below.
 
 ### Local
 
